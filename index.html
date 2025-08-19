@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fabbies Pizza - Best Pizza in Pakistan</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Header -->
+    <header id="header">
+        <div class="header-container">
+            <div class="logo">
+                <img src="images/logo.jpg" alt="Fabbies Pizza Logo">
+                <div class="logo-text">Fabbies <span>Pizza</span></div>
+            </div>
+            <button class="mobile-menu-btn" id="mobile-menu-btn">
+                <i class="fas fa-bars"></i>
+            </button>
+            <div class="nav-links" id="nav-links">
+                <a href="#home">Home</a>
+                <a href="#menu">Menu</a>
+                <a href="#offers">Offers</a>
+                <a href="#about">About</a>
+                <a href="#contact">Contact</a>
+                <button class="cart-btn" id="cart-btn">
+                    <i class="fas fa-shopping-cart cart-icon"></i>
+                    Cart <span class="cart-count" id="cart-count">0</span>
+                </button>
+            </div>
+        </div>
+    </header>
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-slideshow">
+            <div class="hero-slide active" style="background-image: url('https://images.unsplash.com/photo-1565299624946-b28f40a0ae38');"></div>
+            <div class="hero-slide" style="background-image: url('https://images.unsplash.com/photo-1568901346375-23c9450c58cd');"></div>
+            <div class="hero-slide" style="background-image: url('https://images.unsplash.com/photo-1546069901-ba9599a7e63c');"></div>
+            <div class="hero-slide" style="background-image: url('https://images.unsplash.com/photo-1513104890138-7c749659a591');"></div>
+        </div>
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <h1 class="hero-title">Delicious Pizza in Pakistan</h1>
+            <p class="hero-subtitle">Authentic flavors made with premium halal ingredients</p>
+            <div class="hero-buttons">
+                <a href="#menu" class="btn btn-primary">Order Now</a>
+                <a href="#offers" class="btn btn-outline">View Offers</a>
+            </div>
+        </div>
+    </section>
+    <!-- Menu Section -->
+    <section class="menu-section" id="menu">
+        <div class="section-container">
+            <div class="section-title">
+                <h2>Our Delicious Menu</h2>
+            </div>
+            <div class="menu-categories">
+                <button class="category-btn active" data-category="all">All Items</button>
+                <button class="category-btn" data-category="pizza">Pizza</button>
+                <button class="category-btn" data-category="burger">Burgers</button>
+                <button class="category-btn" data-category="pasta">Pasta</button>
+                <button class="category-btn" data-category="sides">Sides</button>
+            </div>
+            <div class="menu-items">
+                <!-- Pizza Items -->
+                <div class="menu-item" data-category="pizza">
+                    <div class="item-badge">Popular</div>
+                    <div class="item-image-container">
+                        <img src="images/Malai Boti.jpg" alt="Malai Boti Pizza" class="item-image">
+                    </div>
+                    <div class="item-details">
+                        <h3 class="item-title">Malai Boti Pizza</h3>
+                        <p class="item-description">Tender chicken pieces marinated in creamy malai spices with mozzarella cheese</p>
+                        <div class="price-size">
+                            <span class="item-price">Small: Rs. 800</span>
+                            <span class="item-price">Medium: Rs. 1200</span>
+                            <span class="item-price">Large: Rs. 1600</span>
+                        </div>
+                        <div class="item-actions">
+                            <select class="size-selector">
+                                <option value="small">Small</option>
+                                <option value="medium">Medium</option>
+                                <option value="large">Large</option>
+                            </select>
+                            <button class="add-to-cart" data-item="Malai Boti Pizza">
+                                <i class="fas fa-plus"></i> Add
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="menu-item" data-category="pizza">
+                    <div class="item-image-container">
+                        <img src="images/Pizza.jpg" alt="Chicken Tikka Pizza" class="item-image">
+                    </div>
+                    <div class="item-details">
+                        <h3 class="item-title">Chicken Tikka Pizza</h3>
+                        <p class="item-description">Spicy chicken tikka pieces with traditional Pakistani flavors and cheese</p>
+                        <div class="price-size">
+                            <span class="item-price">Small: Rs. 750</span>
+                            <span class="item-price">Medium: Rs. 1100</span>
+                            <span class="item-price">Large: Rs. 1500</span>
+                        </div>
+                        <div class="item-actions">
+                            <select class="size-selector">
+                                <option value="small">Small</option>
+                                <option value="medium">Medium</option>
+                                <option value="large">Large</option>
+                            </select>
+                            <button class="add-to-cart" data-item="Chicken Tikka Pizza">
+                                <i class="fas fa-plus"></i> Add
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="menu-item" data-category="pizza">
+                    <div class="item-badge">New</div>
+                    <div class="item-image-container">
+                        <img src="images/Pizzaa.jpg" alt="Chicken Fajita Pizza" class="item-image">
+                    </div>
+                    <div class="item-details">
+                        <h3 class="item-title">Chicken Fajita Pizza</h3>
+                        <p class="item-description">Spicy fajita chicken with bell peppers, onions and mozzarella cheese</p>
+                        <div class="price-size">
+                            <span class="item-price">Small: Rs. 850</span>
+                            <span class="item-price">Medium: Rs. 1250</span>
+                            <span class="item-price">Large: Rs. 1700</span>
+                        </div>
+                        <div class="item-actions">
+                            <select class="size-selector">
+                                <option value="small">Small</option>
+                                <option value="medium">Medium</option>
+                                <option value="large">Large</option>
+                            </select>
+                            <button class="add-to-cart" data-item="Chicken Fajita Pizza">
+                                <i class="fas fa-plus"></i> Add
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <!-- Burger Items -->
+                <div class="menu-item" data-category="burger">
+                    <div class="item-badge">Bestseller</div>
+                    <div class="item-image-container">
+                        <img src="images/Burger1.jpg" alt="Zinger Burger" class="item-image">
+                    </div>
+                    <div class="item-details">
+                        <h3 class="item-title">Zinger Burger</h3>
+                        <p class="item-description">Crispy chicken fillet with special sauce, lettuce and fresh veggies</p>
+                        <p class="item-price">Rs. 350</p>
+                        <div class="item-actions">
+                            <button class="add-to-cart" data-item="Zinger Burger" data-price="350">
+                                <i class="fas fa-plus"></i> Add
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="menu-item" data-category="burger">
+                    <div class="item-image-container">
+                        <img src="images/Burger o.jpg" alt="Double Cheese Burger" class="item-image">
+                    </div>
+                    <div class="item-details">
+                        <h3 class="item-title">Double Cheese Burger</h3>
+                        <p class="item-description">Two beef patties with double cheese, special sauce and fresh veggies</p>
+                        <p class="item-price">Rs. 450</p>
+                        <div class="item-actions">
+                            <button class="add-to-cart" data-item="Double Cheese Burger" data-price="450">
+                                <i class="fas fa-plus"></i> Add
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <!-- Pasta Items -->
+                <div class="menu-item" data-category="pasta">
+                    <div class="item-image-container">
+                        <img src="images/Flam Pasta.jpg" alt="White Sauce Pasta" class="item-image">
+                    </div>
+                    <div class="item-details">
+                        <h3 class="item-title">White Sauce Pasta</h3>
+                        <p class="item-description">Creamy white sauce pasta with chicken and mushrooms</p>
+                        <p class="item-price">Rs. 500</p>
+                        <div class="item-actions">
+                            <button class="add-to-cart" data-item="White Sauce Pasta" data-price="500">
+                                <i class="fas fa-plus"></i> Add
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <!-- Side Items -->
+                <div class="menu-item" data-category="sides">
+                    <div class="item-image-container">
+                        <img src="images/Nuggets.jpg" alt="Chicken Nuggets" class="item-image">
+                    </div>
+                    <div class="item-details">
+                        <h3 class="item-title">Chicken Nuggets (6 pcs)</h3>
+                        <p class="item-description">Crispy chicken nuggets served with your choice of dipping sauce</p>
+                        <p class="item-price">Rs. 300</p>
+                        <div class="item-actions">
+                            <button class="add-to-cart" data-item="Chicken Nuggets (6 pcs)" data-price="300">
+                                <i class="fas fa-plus"></i> Add
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="menu-item" data-category="sides">
+                    <div class="item-image-container">
+                        <img src="images/Fries.jpg" alt="French Fries" class="item-image">
+                    </div>
+                    <div class="item-details">
+                        <h3 class="item-title">French Fries</h3>
+                        <p class="item-description">Golden crispy fries with a sprinkle of salt</p>
+                        <p class="item-price">Rs. 200</p>
+                        <div class="item-actions">
+                            <button class="add-to-cart" data-item="French Fries" data-price="200">
+                                <i class="fas fa-plus"></i> Add
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Special Offers -->
+    <section class="offers-section" id="offers">
+        <div class="offer-bg"></div>
+        <div class="offer-container">
+            <div class="section-title">
+                <h2 style="color: white;">Special Offers</h2>
+            </div>
+            <div class="offer-cards">
+                <div class="offer-card">
+                    <img src="images/Family deal.jpg" alt="Family Deal" class="offer-image">
+                    <div class="offer-details">
+                        <span class="offer-tag">Save 21%</span>
+                        <h3 class="offer-title">Family Deal</h3>
+                        <p class="offer-description">2 Large Pizzas + 1.5L Drink + Garlic Bread + Chicken Nuggets</p>
+                        <p class="offer-price">Rs. 2799 <span style="text-decoration: line-through; color: #777; font-size: 1rem;">Rs. 3399</span></p>
+                        <button class="add-to-cart" data-item="Family Deal" data-price="2799" style="width: 100%;">
+                            <i class="fas fa-shopping-cart"></i> Add to Cart
+                        </button>
+                    </div>
+                </div>
+                <div class="offer-card">
+                    <img src="images/Combo Deal.jpg" alt="Combo Meal" class="offer-image">
+                    <div class="offer-details">
+                        <span class="offer-tag">Save 15%</span>
+                        <h3 class="offer-title">Combo Meal</h3>
+                        <p class="offer-description">1 Medium Pizza + 2 Zinger Burgers + Fries + 1L Drink</p>
+                        <p class="offer-price">Rs. 1899 <span style="text-decoration: line-through; color: #777; font-size: 1rem;">Rs. 2199</span></p>
+                        <button class="add-to-cart" data-item="Combo Meal" data-price="1899" style="width: 100%;">
+                            <i class="fas fa-shopping-cart"></i> Add to Cart
+                        </button>
+                    </div>
+                </div>
+                <div class="offer-card">
+                    <img src="images/Weekend deal.jpg" alt="Weekend Special" class="offer-image">
+                    <div class="offer-details">
+                        <span class="offer-tag">Weekend Only</span>
+                        <h3 class="offer-title">Weekend Special</h3>
+                        <p class="offer-description">1 Large Pizza + Pasta + Garlic Bread + 1.5L Drink</p>
+                        <p class="offer-price">Rs. 2299 <span style="text-decoration: line-through; color: #777; font-size: 1rem;">Rs. 2699</span></p>
+                        <button class="add-to-cart" data-item="Weekend Special" data-price="2299" style="width: 100%;">
+                            <i class="fas fa-shopping-cart"></i> Add to Cart
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- About Section -->
+    <section class="about-section" id="about">
+        <div class="section-container">
+            <div class="about-container">
+                <div class="about-content">
+                    <h2>About Fabbies Pizza</h2>
+                    <p>Fabbies Pizza is a halal-certified pizza restaurant serving delicious, high-quality pizzas and fast food in Pakistan. We use only the freshest ingredients and traditional recipes to bring you authentic flavors that satisfy your cravings.</p>
+                    <p>Our mission is to provide delicious halal food with excellent service at affordable prices. All our chicken and meat is zabiha halal, and we maintain the highest standards of cleanliness and food preparation.</p>
+                    <div class="halal-badge">
+                        <i class="fas fa-check-circle"></i>
+                        <span>100% Halal Certified</span>
+                    </div>
+                </div>
+                <div class="about-image">
+                    <img src="https://images.unsplash.com/photo-1513104890138-7c749659a591" alt="Fabbies Pizza Restaurant">
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Testimonials -->
+    <section class="testimonials-section">
+        <div class="testimonials-container">
+            <div class="section-title">
+                <h2>What Our Customers Say</h2>
+            </div>
+            <div class="testimonials">
+                <div class="testimonial">
+                    <div class="testimonial-content">
+                        The Malai Boti Pizza is absolutely delicious! The chicken is so tender and flavorful. Definitely my favorite pizza in town.
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">
+                            <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Ahmed Khan">
+                        </div>
+                        <div class="author-info">
+                            <h4>Ahmed Khan</h4>
+                            <p>Multan</p>
+                            <div class="rating">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial">
+                    <div class="testimonial-content">
+                        Fast delivery and the pizza was still hot when it arrived. The Chicken Tikka pizza has the perfect amount of spice. Highly recommended!
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">
+                            <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Fatima Ali">
+                        </div>
+                        <div class="author-info">
+                            <h4>Fatima Ali</h4>
+                            <p>Multan</p>
+                            <div class="rating">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial">
+                    <div class="testimonial-content">
+                        The Family Deal is perfect for our weekend get-togethers. Great value for money and everyone loves the food. The nuggets are especially crispy!
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">
+                            <img src="https://randomuser.me/api/portraits/men/67.jpg" alt="Usman Malik">
+                        </div>
+                        <div class="author-info">
+                            <h4>Usman Malik</h4>
+                            <p>Multan</p>
+                            <div class="rating">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Contact Section -->
+<section class="contact-section" id="contact">
+    <div class="contact-container">
+        <div class="section-title">
+            <h2>Contact Us</h2>
+        </div>
+        <div class="contact-grid">
+            <div class="contact-info">
+                <div class="contact-card">
+                    <div class="contact-icon">
+                        <i class="fas fa-map-marker-alt"></i>
+                    </div>
+                    <div class="contact-text">
+                        <h3>Our Location</h3>
+                        <p>Jalal Park Street, B Block North Gulgasht Colony, Multan, Pakistan</p>
+                    </div>
+                </div>
+                <div class="contact-card">
+                    <div class="contact-icon">
+                        <i class="fas fa-phone-alt"></i>
+                    </div>
+                    <div class="contact-text">
+                        <h3>Phone Number</h3>
+                        <p>0310-1044444</p>
+                    </div>
+                </div>
+                <div class="contact-card">
+                    <div class="contact-icon">
+                        <i class="fas fa-envelope"></i>
+                    </div>
+                    <div class="contact-text">
+                        <h3>Email Address</h3>
+                        <p>info@fabbiespizza.com</p>
+                        <p>orders@fabbiespizza.com</p>
+                    </div>
+                </div>
+                <div class="contact-card">
+                    <div class="contact-icon">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <div class="contact-text">
+                        <h3>Opening Hours</h3>
+                        <p>Monday - Sunday: 12:00 PM - 04:00 AM</p>
+                    </div>
+                </div>
+            </div>
+            <div class="contact-form">
+                <h3>Send Us a Message</h3>
+                <form id="contact-form" action="https://formspree.io/f/xvgqyeon" method="POST">
+                    <div class="form-group">
+                        <label for="name">Your Name</label>
+                        <input type="text" name="name" id="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email Address</label>
+                        <input type="email" name="email" id="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="subject">Subject</label>
+                        <input type="text" name="subject" id="subject" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Message</label>
+                        <textarea name="message" id="message" rows="5" required></textarea>
+                    </div>
+                    <button type="submit" class="submit-btn">Send Message</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+    <!-- Footer -->
+    <footer>
+        <div class="footer-container">
+            <div class="footer-about">
+                <div class="footer-logo">
+                    <img src="images/logo.jpg" alt="Fabbies Pizza Logo">
+                </div>
+                <p>Fabbies Pizza is your destination for delicious pizza and fast food in Pakistan. We pride ourselves on using only the freshest ingredients and traditional recipes.</p>
+                <div class="social-links">
+                    <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-whatsapp"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                </div>
+            </div>
+            <div class="footer-links">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#menu">Menu</a></li>
+                    <li><a href="#offers">Offers</a></li>
+                    <li><a href="#about">About Us</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-links">
+                <h3>Our Menu</h3>
+                <ul>
+                    <li><a href="#">Pizzas</a></li>
+                    <li><a href="#">Burgers</a></li>
+                    <li><a href="#">Pasta</a></li>
+                    <li><a href="#">Sides</a></li>
+                    <li><a href="#">Desserts</a></li>
+                </ul>
+            </div>
+            <div class="footer-newsletter">
+                <h3>Newsletter</h3>
+                <p>Subscribe to our newsletter to get updates on special offers and discounts.</p>
+                <form class="newsletter-form">
+                    <input type="email" class="newsletter-input" placeholder="Your Email Address" required>
+                    <button type="submit" class="newsletter-btn"><i class="fas fa-paper-plane"></i></button>
+                </form>
+                <h3 style="margin-top: 1.5rem;">Payment Methods</h3>
+                <div class="payment-methods">
+                    <div class="payment-method">
+                        <img src="images/Jazzcash.jpg" alt="JazzCash">
+                    </div>
+                    <div class="payment-method">
+                        <img src="images/easyP.jpg" alt="EasyPaisa">
+                    </div>
+                    <div class="payment-method">
+                        <img src="images/VISA.jpg" alt="VISA">
+                    </div>
+                    <div class="payment-method">
+                        <img src="images/Master.jpg" alt="MasterCard">
+                    </div>
+                    <div class="payment-method">
+                        <img src="images/Pay.jpg" alt="PayPak">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 Fabbies Pizza. All Rights Reserved. | Designed with <i class="fas fa-heart" style="color: var(--primary);"></i> in Pakistan</p>
+        </div>
+    </footer>
+    <!-- Cart Sidebar -->
+    <div class="cart-sidebar" id="cart-sidebar">
+        <div class="cart-header">
+            <h3 class="cart-title">Your Order</h3>
+            <button class="close-cart" id="close-cart">&times;</button>
+        </div>
+        <div class="cart-items" id="cart-items">
+            <!-- Cart items will be added here dynamically -->
+            <div style="text-align: center; padding: 2rem; color: #777;">
+                <i class="fas fa-shopping-cart" style="font-size: 2rem; margin-bottom: 1rem;"></i>
+                <p>Your cart is empty</p>
+            </div>
+        </div>
+        <div class="cart-footer">
+            <div class="cart-subtotal">
+                <span>Subtotal:</span>
+                <span>Rs. <span id="cart-total">0</span></span>
+            </div>
+            <button class="checkout-btn" id="checkout-btn">Proceed to Checkout</button>
+        </div>
+    </div>
+    <!-- Checkout Modal -->
+    <div class="modal" id="checkout-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Checkout</h3>
+                <button class="close-modal" id="close-checkout">&times;</button>
+            </div>
+            <form id="checkout-form">
+                <div class="form-group">
+                    <label for="checkout-name">Full Name</label>
+                    <input type="text" id="checkout-name" required>
+                </div>
+                <div class="form-group">
+                    <label for="checkout-phone">Phone Number</label>
+                    <input type="tel" id="checkout-phone" required>
+                </div>
+                <div class="form-group">
+                    <label for="checkout-address">Delivery Address</label>
+                    <textarea id="checkout-address" rows="3" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Payment Method</label>
+                    <div class="payment-methods-list">
+                        <label class="payment-method-option">
+                            <input type="radio" name="payment" value="jazzcash" checked>
+                            <div class="payment-method-icon">
+                                <img src="images/Jazzcash.jpg" alt="JazzCash">
+                            </div>
+                            <div class="payment-method-info">
+                                <h4>JazzCash</h4>
+                                <p>Pay via JazzCash mobile account</p>
+                            </div>
+                        </label>
+                        <label class="payment-method-option">
+                            <input type="radio" name="payment" value="easypaisa">
+                            <div class="payment-method-icon">
+                                <img src="images/easyP.jpg" alt="EasyPaisa">
+                            </div>
+                            <div class="payment-method-info">
+                                <h4>EasyPaisa</h4>
+                                <p>Pay via EasyPaisa mobile account</p>
+                            </div>
+                        </label>
+                        <label class="payment-method-option">
+                            <input type="radio" name="payment" value="card">
+                            <div class="payment-method-icon">
+                                <img src="images/cards.jpg" alt="Credit Card">
+                            </div>
+                            <div class="payment-method-info">
+                                <h4>Credit/Debit Card</h4>
+                                <p>VISA, MasterCard or PayPak</p>
+                            </div>
+                        </label>
+                        <label class="payment-method-option">
+                            <input type="radio" name="payment" value="cod">
+                            <div class="payment-method-icon">
+                                <i class="fas fa-money-bill-wave"></i>
+                            </div>
+                            <div class="payment-method-info">
+                                <h4>Cash on Delivery</h4>
+                                <p>Pay when you receive your order</p>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="confirm-btn">Confirm Order</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <!-- Confirmation Modal -->
+    <div class="modal" id="confirmation-modal">
+        <div class="modal-content">
+            <div class="confirmation-content">
+                <div class="confirmation-icon">
+                    <i class="fas fa-check-circle"></i>
+                </div>
+                <h3 class="modal-title">Order Confirmed!</h3>
+                <div class="confirmation-message">
+                    <p>Thank you for your order. Your food will be prepared fresh and delivered to you soon.</p>
+                </div>
+                <div class="confirmation-details">
+                    <p><strong>Order ID:</strong> FB-<span id="order-id">12345</span></p>
+                    <p><strong>Estimated Delivery:</strong> 45-60 minutes</p>
+                    <p><strong>Payment Method:</strong> <span id="payment-method">Cash on Delivery</span></p>
+                </div>
+                <button id="close-confirmation" class="btn btn-primary">Close</button>
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+
+<script>
+document.getElementById('contact-form').addEventListener('submit', function(e) {
+    e.preventDefault();
+    const form = this;
+    const formData = new FormData(form);
+    fetch('https://formspree.io/f/xvgqyeon', {
+        method: 'POST',
+        body: formData,
+        headers: { 'Accept': 'application/json' }
+    })
+    .then(response => {
+        if (response.ok) {
+            alert('Thank you! Your message has been sent.');
+            form.reset();
+        } else {
+            alert('Oops! Something went wrong. Please try again.');
+        }
+    })
+    .catch(() => {
+        alert('Network error. Please check your connection and try again.');
+    });
+});
+</script>
+</body>
+</html>
