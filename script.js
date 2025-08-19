@@ -127,27 +127,27 @@ function initCart() {
             return;
         }
         cartSidebar.classList.remove('active');
-        checkoutModal.classList.add('show');
+        checkoutModal.classList.add('active');  // FIXED: Changed from 'show' to 'active'
         document.body.style.overflow = 'hidden';
     });
 
     // Close modals
     closeCheckout.addEventListener('click', function() {
-        checkoutModal.classList.remove('show');
+        checkoutModal.classList.remove('active');  // FIXED: Changed from 'show' to 'active'
         document.body.style.overflow = '';
     });
     closeConfirmation.addEventListener('click', function() {
-        confirmationModal.classList.remove('show');
+        confirmationModal.classList.remove('active');  // FIXED: Changed from 'show' to 'active'
         document.body.style.overflow = '';
     });
 
     window.addEventListener('click', function(e) {
         if (e.target === checkoutModal) {
-            checkoutModal.classList.remove('show');
+            checkoutModal.classList.remove('active');  // FIXED: Changed from 'show' to 'active'
             document.body.style.overflow = '';
         }
         if (e.target === confirmationModal) {
-            confirmationModal.classList.remove('show');
+            confirmationModal.classList.remove('active');  // FIXED: Changed from 'show' to 'active'
             document.body.style.overflow = '';
         }
     });
@@ -187,8 +187,8 @@ function initCart() {
         // Show confirmation
         orderIdElement.textContent = orderId;
         paymentMethodElement.textContent = paymentMethodText;
-        checkoutModal.classList.remove('show');
-        confirmationModal.classList.add('show');
+        checkoutModal.classList.remove('active');  // FIXED: Changed from 'show' to 'active'
+        confirmationModal.classList.add('active');  // FIXED: Changed from 'show' to 'active'
         document.body.style.overflow = 'hidden';
 
         // Reset cart
