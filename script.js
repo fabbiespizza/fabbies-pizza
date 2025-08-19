@@ -155,11 +155,38 @@ document.querySelectorAll('.add-to-cart').forEach(button => {
             'card': 'Credit/Debit Card',
             'cod': 'Cash on Delivery'
         }[paymentMethod];
-        // Show confirmation
-        orderIdElement.textContent = orderId;
-        paymentMethodElement.textContent = paymentMethodText;
-        checkoutModal.classList.remove('active');
-        confirmationModal.classList.add('active');
+        // Prepare order data for EmailJS
+const templateParams = {
+    to_email: document.getElementById('checkout-email').value,
+    to_name: document.getElementById('checkout-name').value,
+    order_id: orderId,
+    phone: document.getElementById('checkout-phone').value,
+    address: document.getElementById('checkout-address').value,
+    payment_method: paymentMethodText,
+    items: cart.map(item => `${item.name} x ${item.quantity}`).join('<br>'),
+    total: cart.reduce((sum, item) => sum + item.price * item.quantity, 0)
+};
+
+// Send email via EmailJS
+emailjs.send('service_mqnhy5n', 'template_w6wpil4', templateParams)
+    .then(() => {
+        console.log('✅ Order email sent successfully!');
+    })
+    .catch(err => {
+        console.log('❌ EmailJS Error:', err);
+    });
+
+// Show confirmation
+orderIdElement.textContent = orderId;
+paymentMethodElement.textContent = paymentMethodText;
+checkoutModal.classList.remove('show');
+confirmationModal.classList.add('show');
+
+// Reset cart
+cart = [];
+updateCartCount();
+updateCartDisplay();
+checkoutForm.reset();
         // In a real app, you would send the order data to your backend here
         const orderData = {
             customer: {
@@ -289,4 +316,5 @@ document.getElementById('close-checkout').addEventListener('click', () => {
 document.getElementById('close-confirmation').addEventListener('click', () => {
     document.getElementById('confirmation-modal').classList.remove('show');
     document.body.style.overflow = '';
+
 });
