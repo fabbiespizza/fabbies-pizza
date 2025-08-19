@@ -138,7 +138,7 @@ header.scrolled {
     color: var(--light);
     margin-top: 70px;
 }
-.hero-slideshow {
+.hero-slide.active {
     position: absolute;
     top: 0;
     left: 0;
@@ -915,8 +915,8 @@ footer {
     overflow-y: auto; /* Enable scroll inside modal */
     background-color: rgba(0, 0, 0, 0.5); /* Dim background */
 }
-.modal.show {
-    display: block; /* Show modal when class is added */
+.modal.active {
+    display: block; /* .active modal when class is added */
 }
 /* --- Optional: Modal Content Responsive Styling --- */
 .modal-content {
