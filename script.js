@@ -17,21 +17,19 @@ const menuItems = document.querySelectorAll('.menu-item');
 const checkoutForm = document.getElementById('checkout-form');
 const orderIdElement = document.getElementById('order-id');
 const paymentMethodElement = document.getElementById('payment-method');
+
 // Cart Data
 let cart = [];
+
 // Initialize the page
 document.addEventListener('DOMContentLoaded', function() {
-    // Initialize hero slideshow
     initSlideshow();
-    // Initialize scroll header effect
     window.addEventListener('scroll', handleScroll);
-    // Initialize mobile menu
     mobileMenuBtn.addEventListener('click', toggleMobileMenu);
-    // Initialize cart functionality
     initCart();
-    // Initialize menu filtering
     initMenuFilter();
 });
+
 // Hero Slideshow
 function initSlideshow() {
     const slides = document.querySelectorAll('.hero-slide');
@@ -44,10 +42,10 @@ function initSlideshow() {
         currentSlide = (currentSlide + 1) % slides.length;
         showSlide(currentSlide);
     }
-    // Start slideshow
     showSlide(0);
     setInterval(nextSlide, 5000);
 }
+
 // Scroll Header Effect
 function handleScroll() {
     const header = document.getElementById('header');
@@ -57,12 +55,14 @@ function handleScroll() {
         header.classList.remove('scrolled');
     }
 }
+
 // Mobile Menu Toggle
 function toggleMobileMenu() {
     navLinks.classList.toggle('active');
     mobileMenuBtn.innerHTML = navLinks.classList.contains('active') ? 
         '<i class="fas fa-times"></i>' : '<i class="fas fa-bars"></i>';
 }
+
 // Cart Functionality
 function initCart() {
     // Toggle cart sidebar
@@ -73,51 +73,53 @@ function initCart() {
     closeCartBtn.addEventListener('click', () => {
         cartSidebar.classList.remove('active');
     });
-// Add to cart buttons - FIXED VERSION
-document.querySelectorAll('.add-to-cart').forEach(button => {
-    button.addEventListener('click', function () {
-        const itemName = this.getAttribute('data-item');
-        let itemElement = this.closest('.menu-item') || this.closest('.offer-card');
-        if (!itemElement) return;
-        const sizeSelector = itemElement.querySelector('.size-selector');
-        const selectedSize = sizeSelector ? sizeSelector.value : null;
-        const selectedSizeText = sizeSelector ? sizeSelector.options[sizeSelector.selectedIndex].text : null;
-        // Default price for non-size items (e.g., burgers)
-        let price = parseFloat(this.getAttribute('data-price'));
-        // If it's a size-based item (like pizza), extract price from .price-size span
-        if (selectedSize && itemElement.querySelector('.price-size')) {
-            const priceSpans = itemElement.querySelectorAll('.price-size .item-price');
-            let priceText = '';
-            for (let span of priceSpans) {
-                const text = span.textContent.trim();
-                if (text.toLowerCase().includes(selectedSizeText.toLowerCase())) {
-                    priceText = text;
-                    break;
+
+    // Add to cart buttons
+    document.querySelectorAll('.add-to-cart').forEach(button => {
+        button.addEventListener('click', function () {
+            const itemName = this.getAttribute('data-item');
+            let itemElement = this.closest('.menu-item') || this.closest('.offer-card');
+            if (!itemElement) return;
+            const sizeSelector = itemElement.querySelector('.size-selector');
+            const selectedSize = sizeSelector ? sizeSelector.value : null;
+            const selectedSizeText = sizeSelector ? sizeSelector.options[sizeSelector.selectedIndex]?.text : null;
+            let price = parseFloat(this.getAttribute('data-price'));
+
+            if (selectedSize && itemElement.querySelector('.price-size')) {
+                const priceSpans = itemElement.querySelectorAll('.price-size .item-price');
+                let priceText = '';
+                for (let span of priceSpans) {
+                    const text = span.textContent.trim();
+                    if (text.toLowerCase().includes(selectedSizeText?.toLowerCase())) {
+                        priceText = text;
+                        break;
+                    }
                 }
+                const extractedPrice = priceText.match(/[\d,]+(\.\d+)?/);
+                price = extractedPrice ? parseFloat(extractedPrice[0].replace(',', '')) : 0;
             }
-            // Extract number: e.g., "Medium: Rs. 1200" → 1200
-            const extractedPrice = priceText.match(/[\d,]+(\.\d+)?/);
-            price = extractedPrice ? parseFloat(extractedPrice[0].replace(',', '')) : 0;
-        }
-        const displayName = selectedSizeText ? `${itemName} (${selectedSizeText})` : itemName;
-        const imageElement = itemElement.querySelector('img');
-        const imageSrc = imageElement ? imageElement.src : '';
-        const existingItemIndex = cart.findIndex(item => item.name === displayName);
-        if (existingItemIndex >= 0) {
-            cart[existingItemIndex].quantity += 1;
-        } else {
-            cart.push({
-                name: displayName,
-                price: price,
-                quantity: 1,
-                size: selectedSize,
-                image: imageSrc
-            });
-        }
-        updateCartCount();
-        showCartNotification();
+
+            const displayName = selectedSizeText ? `${itemName} (${selectedSizeText})` : itemName;
+            const imageElement = itemElement.querySelector('img');
+            const imageSrc = imageElement ? imageElement.src : '';
+
+            const existingItemIndex = cart.findIndex(item => item.name === displayName);
+            if (existingItemIndex >= 0) {
+                cart[existingItemIndex].quantity += 1;
+            } else {
+                cart.push({
+                    name: displayName,
+                    price: price,
+                    quantity: 1,
+                    size: selectedSize,
+                    image: imageSrc
+                });
+            }
+            updateCartCount();
+            showCartNotification();
+        });
     });
-});
+
     // Checkout button
     checkoutBtn.addEventListener('click', function() {
         if (cart.length === 0) {
@@ -125,29 +127,36 @@ document.querySelectorAll('.add-to-cart').forEach(button => {
             return;
         }
         cartSidebar.classList.remove('active');
-        checkoutModal.classList.add('active');
+        checkoutModal.classList.add('show');
+        document.body.style.overflow = 'hidden';
     });
+
     // Close modals
     closeCheckout.addEventListener('click', function() {
-        checkoutModal.classList.remove('active');
+        checkoutModal.classList.remove('show');
+        document.body.style.overflow = '';
     });
     closeConfirmation.addEventListener('click', function() {
-        confirmationModal.classList.remove('active');
+        confirmationModal.classList.remove('show');
+        document.body.style.overflow = '';
     });
+
     window.addEventListener('click', function(e) {
         if (e.target === checkoutModal) {
-            checkoutModal.classList.remove('active');
+            checkoutModal.classList.remove('show');
+            document.body.style.overflow = '';
         }
         if (e.target === confirmationModal) {
-            confirmationModal.classList.remove('active');
+            confirmationModal.classList.remove('show');
+            document.body.style.overflow = '';
         }
     });
+
     // Form submission
     checkoutForm.addEventListener('submit', function(e) {
         e.preventDefault();
-        // Generate random order ID
+
         const orderId = Math.floor(Math.random() * 90000) + 10000;
-        // Get selected payment method
         const paymentMethod = document.querySelector('input[name="payment"]:checked').value;
         const paymentMethodText = {
             'jazzcash': 'JazzCash',
@@ -155,65 +164,48 @@ document.querySelectorAll('.add-to-cart').forEach(button => {
             'card': 'Credit/Debit Card',
             'cod': 'Cash on Delivery'
         }[paymentMethod];
-        // Prepare order data for EmailJS
-const templateParams = {
-    to_email: document.getElementById('checkout-email').value,
-    to_name: document.getElementById('checkout-name').value,
-    order_id: orderId,
-    phone: document.getElementById('checkout-phone').value,
-    address: document.getElementById('checkout-address').value,
-    payment_method: paymentMethodText,
-    items: cart.map(item => `${item.name} x ${item.quantity}`).join('<br>'),
-    total: cart.reduce((sum, item) => sum + item.price * item.quantity, 0)
-};
 
-// Send email via EmailJS
-emailjs.send('service_mqnhy5n', 'template_w6wpil4', templateParams)
-    .then(() => {
-        console.log('✅ Order email sent successfully!');
-    })
-    .catch(err => {
-        console.log('❌ EmailJS Error:', err);
-    });
-
-// Show confirmation
-orderIdElement.textContent = orderId;
-paymentMethodElement.textContent = paymentMethodText;
-checkoutModal.classList.remove('show');
-confirmationModal.classList.add('show');
-
-// Reset cart
-cart = [];
-updateCartCount();
-updateCartDisplay();
-checkoutForm.reset();
-        // In a real app, you would send the order data to your backend here
-        const orderData = {
-            customer: {
-                name: document.getElementById('checkout-name').value,
-                phone: document.getElementById('checkout-phone').value,
-                address: document.getElementById('checkout-address').value
-            },
-            paymentMethod: paymentMethod,
-            items: cart,
-            total: cart.reduce((total, item) => total + (item.price * item.quantity), 0),
-            orderId: orderId
+        const templateParams = {
+            to_email: document.getElementById('checkout-email').value,
+            to_name: document.getElementById('checkout-name').value,
+            order_id: orderId,
+            phone: document.getElementById('checkout-phone').value,
+            address: document.getElementById('checkout-address').value,
+            payment_method: paymentMethodText,
+            items: cart.map(item => `${item.name} x ${item.quantity}`).join('<br>'),
+            total: cart.reduce((sum, item) => sum + item.price * item.quantity, 0).toFixed(2)
         };
-        console.log('Order placed:', orderData);
+
+        emailjs.send('service_mqnhy5n', 'template_w6wpil4', templateParams)
+            .then(() => {
+                console.log('✅ Order email sent!');
+            })
+            .catch(err => {
+                console.log('❌ EmailJS Error:', err);
+            });
+
+        // Show confirmation
+        orderIdElement.textContent = orderId;
+        paymentMethodElement.textContent = paymentMethodText;
+        checkoutModal.classList.remove('show');
+        confirmationModal.classList.add('show');
+        document.body.style.overflow = 'hidden';
+
         // Reset cart
         cart = [];
         updateCartCount();
         updateCartDisplay();
-        // Reset form
         checkoutForm.reset();
     });
 }
-// Update cart count display
+
+// Update cart count
 function updateCartCount() {
     const totalItems = cart.reduce((total, item) => total + item.quantity, 0);
     cartCount.textContent = totalItems;
 }
-// Update cart items display
+
+// Update cart display
 function updateCartDisplay() {
     if (cart.length === 0) {
         cartItemsContainer.innerHTML = `
@@ -247,7 +239,6 @@ function updateCartDisplay() {
             </div>
         `;
         cartItemsContainer.appendChild(itemElement);
-        // Add event listener to remove button
         itemElement.querySelector('.remove-item').addEventListener('click', function() {
             const index = parseInt(this.getAttribute('data-index'));
             cart.splice(index, 1);
@@ -257,7 +248,8 @@ function updateCartDisplay() {
     });
     cartTotal.textContent = total.toFixed(2);
 }
-// Show notification when item added to cart
+
+// Show notification
 function showCartNotification() {
     const notification = document.createElement('div');
     notification.style.position = 'fixed';
@@ -283,15 +275,14 @@ function showCartNotification() {
         setTimeout(() => notification.remove(), 500);
     }, 3000);
 }
-// Menu Filter Functionality
+
+// Menu Filter
 function initMenuFilter() {
     categoryBtns.forEach(button => {
         button.addEventListener('click', function() {
-            // Update active button
             categoryBtns.forEach(btn => btn.classList.remove('active'));
             this.classList.add('active');
             const category = this.getAttribute('data-category');
-            // Filter menu items
             menuItems.forEach(item => {
                 if (category === 'all' || item.getAttribute('data-category') === category) {
                     item.style.display = 'block';
@@ -302,19 +293,3 @@ function initMenuFilter() {
         });
     });
 }
-// Checkout Modal open
-document.getElementById('checkout-btn').addEventListener('click', () => {
-    document.getElementById('checkout-modal').classList.add('show');
-    document.body.style.overflow = 'hidden'; // prevent background scroll
-});
-// Checkout Modal close
-document.getElementById('close-checkout').addEventListener('click', () => {
-    document.getElementById('checkout-modal').classList.remove('show');
-    document.body.style.overflow = ''; // restore scroll
-});
-// Confirmation Modal close (optional handling)
-document.getElementById('close-confirmation').addEventListener('click', () => {
-    document.getElementById('confirmation-modal').classList.remove('show');
-    document.body.style.overflow = '';
-
-});
