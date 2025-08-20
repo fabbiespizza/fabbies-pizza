@@ -20,14 +20,17 @@ const paymentMethodElement = document.getElementById('payment-method');
 
 // Cart Data
 let cart = [];
+const LOCAL_STORAGE_CART_KEY = 'fabbies_cart_v1';
 
 // Initialize the page
 document.addEventListener('DOMContentLoaded', function() {
     initSlideshow();
     window.addEventListener('scroll', handleScroll);
     mobileMenuBtn.addEventListener('click', toggleMobileMenu);
+    restoreCartFromStorage();
     initCart();
     initMenuFilter();
+    initEmailJS();
 });
 
 // Hero Slideshow
@@ -59,7 +62,9 @@ function handleScroll() {
 // Mobile Menu Toggle
 function toggleMobileMenu() {
     navLinks.classList.toggle('active');
-    mobileMenuBtn.innerHTML = navLinks.classList.contains('active') ? 
+    const isOpen = navLinks.classList.contains('active');
+    mobileMenuBtn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+    mobileMenuBtn.innerHTML = isOpen ? 
         '<i class="fas fa-times"></i>' : '<i class="fas fa-bars"></i>';
 }
 
@@ -116,6 +121,7 @@ function initCart() {
                 });
             }
             updateCartCount();
+            saveCartToStorage();
             showCartNotification();
         });
     });
@@ -123,7 +129,7 @@ function initCart() {
     // Checkout button
     checkoutBtn.addEventListener('click', function() {
         if (cart.length === 0) {
-            alert('Your cart is empty!');
+            showToast('Your cart is empty!', 'error');
             return;
         }
         cartSidebar.classList.remove('active');
@@ -156,12 +162,19 @@ function initCart() {
     checkoutForm.addEventListener('submit', function(e) {
         e.preventDefault();
 
-        // Validate email field
-        const email = document.getElementById('checkout-email').value.trim();
-        if (!email) {
-            alert('Please enter a valid email address');
-            return;
-        }
+        // Validate fields
+        const nameVal = document.getElementById('checkout-name').value.trim();
+        const emailVal = document.getElementById('checkout-email').value.trim();
+        const phoneVal = document.getElementById('checkout-phone').value.trim();
+        const addressVal = document.getElementById('checkout-address').value.trim();
+
+        const emailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailVal);
+        const phoneValid = /^[0-9+\-\s]{7,}$/.test(phoneVal);
+
+        if (nameVal.length < 3) { showToast('Please enter your full name.', 'error'); return; }
+        if (!emailValid) { showToast('Please enter a valid email address.', 'error'); return; }
+        if (!phoneValid) { showToast('Please enter a valid phone number.', 'error'); return; }
+        if (addressVal.length < 10) { showToast('Please enter a complete delivery address.', 'error'); return; }
 
         const orderId = Math.floor(Math.random() * 90000) + 10000;
         const paymentMethod = document.querySelector('input[name="payment"]:checked').value;
@@ -172,24 +185,28 @@ function initCart() {
             'cod': 'Cash on Delivery'
         }[paymentMethod];
 
+        const subtotal = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+        const deliveryFee = 99;
+        const totalCost = subtotal + deliveryFee;
+
         const templateParams = {
-    to_email: document.getElementById('checkout-email').value,
-    to_name: document.getElementById('checkout-name').value,
-    order_id: orderId,
-    phone: document.getElementById('checkout-phone').value,
-    address: document.getElementById('checkout-address').value,
-    payment_method: paymentMethodText,
-    orders: cart.map(item => ({
-        name: item.name,
-        units: item.quantity,
-        price: (item.price * item.quantity).toFixed(2)
-    })),
-    cost: {
-        subtotal: cart.reduce((sum, item) => sum + item.price * item.quantity, 0).toFixed(2),
-        delivery: "99.00",  // You can adjust this value
-        total: cart.reduce((sum, item) => sum + item.price * item.quantity, 0).toFixed(2)
-    }
-};
+            to_email: emailVal,
+            to_name: nameVal,
+            order_id: orderId,
+            phone: phoneVal,
+            address: addressVal,
+            payment_method: paymentMethodText,
+            orders: cart.map(item => ({
+                name: item.name,
+                units: item.quantity,
+                price: (item.price * item.quantity).toFixed(2)
+            })),
+            cost: {
+                subtotal: subtotal.toFixed(2),
+                delivery: deliveryFee.toFixed(2),
+                total: totalCost.toFixed(2)
+            }
+        };
 
         // Show loading state
         const submitBtn = this.querySelector('.confirm-btn');
@@ -198,14 +215,15 @@ function initCart() {
         submitBtn.disabled = true;
 
         // Send email
-        emailjs.send('service_mqnhy5n', 'template_w6wpil4', templateParams)
+        if (window.emailjs && typeof emailjs.send === 'function') {
+            emailjs.send('service_mqnhy5n', 'template_w6wpil4', templateParams)
             .then(() => {
                 console.log('✅ Order email sent!');
-                alert('Order confirmed! Check your email for details.');
+                showToast('Order confirmed! Check your email for details.', 'success');
             })
             .catch(err => {
                 console.error('❌ EmailJS Error:', err);
-                alert('Order placed, but failed to send email. We will contact you shortly.');
+                showToast('Order placed, but email failed. We will contact you shortly.', 'error');
             })
             .finally(() => {
                 // Show confirmation
@@ -219,12 +237,32 @@ function initCart() {
                 cart = [];
                 updateCartCount();
                 updateCartDisplay();
+                saveCartToStorage();
                 checkoutForm.reset();
                 
                 // Reset button
                 submitBtn.innerHTML = originalText;
                 submitBtn.disabled = false;
+                // Move focus for accessibility
+                closeConfirmation.focus();
             });
+        } else {
+            // Fallback if EmailJS not available
+            console.warn('EmailJS not loaded; proceeding without email.');
+            orderIdElement.textContent = orderId;
+            paymentMethodElement.textContent = paymentMethodText;
+            checkoutModal.classList.remove('active');
+            confirmationModal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+            cart = [];
+            updateCartCount();
+            updateCartDisplay();
+            saveCartToStorage();
+            checkoutForm.reset();
+            submitBtn.innerHTML = originalText;
+            submitBtn.disabled = false;
+            closeConfirmation.focus();
+        }
     });
 }
 
@@ -273,6 +311,7 @@ function updateCartDisplay() {
             cart.splice(index, 1);
             updateCartDisplay();
             updateCartCount();
+            saveCartToStorage();
         });
     });
     cartTotal.textContent = total.toFixed(2);
@@ -303,6 +342,63 @@ function showCartNotification() {
         notification.style.transition = 'opacity 0.5s';
         setTimeout(() => notification.remove(), 500);
     }, 3000);
+}
+
+// Generic toast
+function showToast(message, type = 'info') {
+    const toast = document.createElement('div');
+    toast.style.position = 'fixed';
+    toast.style.bottom = '20px';
+    toast.style.right = '20px';
+    toast.style.backgroundColor = type === 'error' ? '#e53935' : (type === 'success' ? 'var(--success)' : '#333');
+    toast.style.color = 'white';
+    toast.style.padding = '12px 18px';
+    toast.style.borderRadius = '6px';
+    toast.style.boxShadow = '0 5px 15px rgba(0,0,0,0.2)';
+    toast.style.zIndex = '1000';
+    toast.textContent = message;
+    document.body.appendChild(toast);
+    setTimeout(() => {
+        toast.style.opacity = '0';
+        toast.style.transition = 'opacity 0.4s';
+        setTimeout(() => toast.remove(), 400);
+    }, 2500);
+}
+
+// Persistence helpers
+function saveCartToStorage() {
+    try {
+        localStorage.setItem(LOCAL_STORAGE_CART_KEY, JSON.stringify(cart));
+    } catch (e) {
+        console.warn('Unable to persist cart:', e);
+    }
+}
+
+function restoreCartFromStorage() {
+    try {
+        const raw = localStorage.getItem(LOCAL_STORAGE_CART_KEY);
+        if (raw) {
+            const parsed = JSON.parse(raw);
+            if (Array.isArray(parsed)) {
+                cart = parsed;
+                updateCartCount();
+                updateCartDisplay();
+            }
+        }
+    } catch (e) {
+        console.warn('Unable to restore cart:', e);
+    }
+}
+
+// EmailJS init
+function initEmailJS() {
+    try {
+        if (window.emailjs && typeof emailjs.init === 'function') {
+            emailjs.init('TrATLnE8FzcvRLEnY');
+        }
+    } catch (e) {
+        console.warn('EmailJS init failed:', e);
+    }
 }
 
 // Menu Filter
