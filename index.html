@@ -15,10 +15,10 @@
                 <img src="https://raw.githubusercontent.com/fabbiespizza/fabbies-pizza/main/images/logo.jpg" alt="Fabbies Pizza Logo">
                 <div class="logo-text">Fabbies <span>Pizza</span></div>
             </div>
-            <button class="mobile-menu-btn" id="mobile-menu-btn">
+            <button class="mobile-menu-btn" id="mobile-menu-btn" aria-label="Toggle navigation" aria-controls="nav-links" aria-expanded="false">
                 <i class="fas fa-bars"></i>
             </button>
-            <div class="nav-links" id="nav-links">
+            <nav class="nav-links" id="nav-links" aria-label="Main navigation">
                 <a href="#home">Home</a>
                 <a href="#menu">Menu</a>
                 <a href="#offers">Offers</a>
@@ -26,9 +26,9 @@
                 <a href="#contact">Contact</a>
                 <button class="cart-btn" id="cart-btn">
                     <i class="fas fa-shopping-cart cart-icon"></i>
-                    Cart <span class="cart-count" id="cart-count">0</span>
+                    Cart <span class="cart-count" id="cart-count" aria-live="polite" aria-atomic="true">0</span>
                 </button>
-            </div>
+            </nav>
         </div>
     </header>
 
@@ -69,7 +69,7 @@
                 <div class="menu-item" data-category="pizza">
                     <div class="item-badge">Popular</div>
                     <div class="item-image-container">
-                        <img src="https://raw.githubusercontent.com/fabbiespizza/fabbies-pizza/main/images/Malai Boti.jpg" alt="Malai Boti Pizza" class="item-image">
+                        <img src="https://raw.githubusercontent.com/fabbiespizza/fabbies-pizza/main/images/Malai Boti.jpg" alt="Malai Boti Pizza" class="item-image" loading="lazy">
                     </div>
                     <div class="item-details">
                         <h3 class="item-title">Malai Boti Pizza</h3>
@@ -93,7 +93,7 @@
                 </div>
                 <div class="menu-item" data-category="pizza">
                     <div class="item-image-container">
-                        <img src="https://raw.githubusercontent.com/fabbiespizza/fabbies-pizza/main/images/Pizza.jpg" alt="Chicken Tikka Pizza" class="item-image">
+                        <img src="https://raw.githubusercontent.com/fabbiespizza/fabbies-pizza/main/images/Pizza.jpg" alt="Chicken Tikka Pizza" class="item-image" loading="lazy">
                     </div>
                     <div class="item-details">
                         <h3 class="item-title">Chicken Tikka Pizza</h3>
@@ -118,7 +118,7 @@
                 <div class="menu-item" data-category="pizza">
                     <div class="item-badge">New</div>
                     <div class="item-image-container">
-                        <img src="https://raw.githubusercontent.com/fabbiespizza/fabbies-pizza/main/images/Pizzaa.jpg" alt="Chicken Fajita Pizza" class="item-image">
+                        <img src="https://raw.githubusercontent.com/fabbiespizza/fabbies-pizza/main/images/Pizzaa.jpg" alt="Chicken Fajita Pizza" class="item-image" loading="lazy">
                     </div>
                     <div class="item-details">
                         <h3 class="item-title">Chicken Fajita Pizza</h3>
@@ -144,7 +144,7 @@
                 <div class="menu-item" data-category="burger">
                     <div class="item-badge">Bestseller</div>
                     <div class="item-image-container">
-                        <img src="https://raw.githubusercontent.com/fabbiespizza/fabbies-pizza/main/images/Burger1.jpg" alt="Zinger Burger" class="item-image">
+                        <img src="https://raw.githubusercontent.com/fabbiespizza/fabbies-pizza/main/images/Burger1.jpg" alt="Zinger Burger" class="item-image" loading="lazy">
                     </div>
                     <div class="item-details">
                         <h3 class="item-title">Zinger Burger</h3>
@@ -159,7 +159,7 @@
                 </div>
                 <div class="menu-item" data-category="burger">
                     <div class="item-image-container">
-                        <img src="https://raw.githubusercontent.com/fabbiespizza/fabbies-pizza/main/images/Burger o.jpg" alt="Double Cheese Burger" class="item-image">
+                        <img src="https://raw.githubusercontent.com/fabbiespizza/fabbies-pizza/main/images/Burger o.jpg" alt="Double Cheese Burger" class="item-image" loading="lazy">
                     </div>
                     <div class="item-details">
                         <h3 class="item-title">Double Cheese Burger</h3>
@@ -175,7 +175,7 @@
                 <!-- Pasta Items -->
                 <div class="menu-item" data-category="pasta">
                     <div class="item-image-container">
-                        <img src="https://raw.githubusercontent.com/fabbiespizza/fabbies-pizza/main/images/Flam Pasta.jpg" alt="White Sauce Pasta" class="item-image">
+                        <img src="https://raw.githubusercontent.com/fabbiespizza/fabbies-pizza/main/images/Flam Pasta.jpg" alt="White Sauce Pasta" class="item-image" loading="lazy">
                     </div>
                     <div class="item-details">
                         <h3 class="item-title">White Sauce Pasta</h3>
@@ -191,7 +191,7 @@
                 <!-- Side Items -->
                 <div class="menu-item" data-category="sides">
                     <div class="item-image-container">
-                        <img src="https://raw.githubusercontent.com/fabbiespizza/fabbies-pizza/main/images/Nuggets.jpg" alt="Chicken Nuggets" class="item-image">
+                        <img src="https://raw.githubusercontent.com/fabbiespizza/fabbies-pizza/main/images/Nuggets.jpg" alt="Chicken Nuggets" class="item-image" loading="lazy">
                     </div>
                     <div class="item-details">
                         <h3 class="item-title">Chicken Nuggets (6 pcs)</h3>
@@ -206,7 +206,7 @@
                 </div>
                 <div class="menu-item" data-category="sides">
                     <div class="item-image-container">
-                        <img src="https://raw.githubusercontent.com/fabbiespizza/fabbies-pizza/main/images/Fries.jpg" alt="French Fries" class="item-image">
+                        <img src="https://raw.githubusercontent.com/fabbiespizza/fabbies-pizza/main/images/Fries.jpg" alt="French Fries" class="item-image" loading="lazy">
                     </div>
                     <div class="item-details">
                         <h3 class="item-title">French Fries</h3>
@@ -232,7 +232,7 @@
             </div>
             <div class="offer-cards">
                 <div class="offer-card">
-                    <img src="https://raw.githubusercontent.com/fabbiespizza/fabbies-pizza/main/images/Family deal.jpg" alt="Family Deal" class="offer-image">
+                    <img src="https://raw.githubusercontent.com/fabbiespizza/fabbies-pizza/main/images/Family deal.jpg" alt="Family Deal" class="offer-image" loading="lazy">
                     <div class="offer-details">
                         <span class="offer-tag">Save 21%</span>
                         <h3 class="offer-title">Family Deal</h3>
@@ -244,7 +244,7 @@
                     </div>
                 </div>
                 <div class="offer-card">
-                    <img src="https://raw.githubusercontent.com/fabbiespizza/fabbies-pizza/main/images/Combo Deal.jpg" alt="Combo Meal" class="offer-image">
+                    <img src="https://raw.githubusercontent.com/fabbiespizza/fabbies-pizza/main/images/Combo Deal.jpg" alt="Combo Meal" class="offer-image" loading="lazy">
                     <div class="offer-details">
                         <span class="offer-tag">Save 15%</span>
                         <h3 class="offer-title">Combo Meal</h3>
@@ -256,7 +256,7 @@
                     </div>
                 </div>
                 <div class="offer-card">
-                    <img src="https://raw.githubusercontent.com/fabbiespizza/fabbies-pizza/main/images/Weekend deal.jpg" alt="Weekend Special" class="offer-image">
+                    <img src="https://raw.githubusercontent.com/fabbiespizza/fabbies-pizza/main/images/Weekend deal.jpg" alt="Weekend Special" class="offer-image" loading="lazy">
                     <div class="offer-details">
                         <span class="offer-tag">Weekend Only</span>
                         <h3 class="offer-title">Weekend Special</h3>
@@ -285,7 +285,7 @@
                     </div>
                 </div>
                 <div class="about-image">
-                    <img src="https://images.unsplash.com/photo-1513104890138-7c749659a591" alt="Fabbies Pizza Restaurant">
+                    <img src="https://images.unsplash.com/photo-1513104890138-7c749659a591" alt="Fabbies Pizza Restaurant" loading="lazy">
                 </div>
             </div>
         </div>
@@ -304,7 +304,7 @@
                     </div>
                     <div class="testimonial-author">
                         <div class="author-avatar">
-                            <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Ahmed Khan">
+                            <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Ahmed Khan" loading="lazy">
                         </div>
                         <div class="author-info">
                             <h4>Ahmed Khan</h4>
@@ -325,7 +325,7 @@
                     </div>
                     <div class="testimonial-author">
                         <div class="author-avatar">
-                            <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Fatima Ali">
+                            <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Fatima Ali" loading="lazy">
                         </div>
                         <div class="author-info">
                             <h4>Fatima Ali</h4>
@@ -346,7 +346,7 @@
                     </div>
                     <div class="testimonial-author">
                         <div class="author-avatar">
-                            <img src="https://randomuser.me/api/portraits/men/67.jpg" alt="Usman Malik">
+                            <img src="https://randomuser.me/api/portraits/men/67.jpg" alt="Usman Malik" loading="lazy">
                         </div>
                         <div class="author-info">
                             <h4>Usman Malik</h4>
@@ -482,19 +482,19 @@
                 <h3 style="margin-top: 1.5rem;">Payment Methods</h3>
                 <div class="payment-methods">
                     <div class="payment-method">
-                        <img src="https://raw.githubusercontent.com/fabbiespizza/fabbies-pizza/main/images/Jazzcash.jpg" alt="JazzCash">
+                        <img src="https://raw.githubusercontent.com/fabbiespizza/fabbies-pizza/main/images/Jazzcash.jpg" alt="JazzCash" loading="lazy">
                     </div>
                     <div class="payment-method">
-                        <img src="https://raw.githubusercontent.com/fabbiespizza/fabbies-pizza/main/images/easyP.jpg" alt="EasyPaisa">
+                        <img src="https://raw.githubusercontent.com/fabbiespizza/fabbies-pizza/main/images/easyP.jpg" alt="EasyPaisa" loading="lazy">
                     </div>
                     <div class="payment-method">
-                        <img src="https://raw.githubusercontent.com/fabbiespizza/fabbies-pizza/main/images/VISA.jpg" alt="VISA">
+                        <img src="https://raw.githubusercontent.com/fabbiespizza/fabbies-pizza/main/images/VISA.jpg" alt="VISA" loading="lazy">
                     </div>
                     <div class="payment-method">
-                        <img src="https://raw.githubusercontent.com/fabbiespizza/fabbies-pizza/main/images/Master.jpg" alt="MasterCard">
+                        <img src="https://raw.githubusercontent.com/fabbiespizza/fabbies-pizza/main/images/Master.jpg" alt="MasterCard" loading="lazy">
                     </div>
                     <div class="payment-method">
-                        <img src="https://raw.githubusercontent.com/fabbiespizza/fabbies-pizza/main/images/Pay.jpg" alt="PayPak">
+                        <img src="https://raw.githubusercontent.com/fabbiespizza/fabbies-pizza/main/images/Pay.jpg" alt="PayPak" loading="lazy">
                     </div>
                 </div>
             </div>
@@ -527,10 +527,10 @@
     </div>
 
     <!-- Checkout Modal -->
-    <div class="modal" id="checkout-modal">
+    <div class="modal" id="checkout-modal" role="dialog" aria-modal="true" aria-labelledby="checkout-title">
         <div class="modal-content">
             <div class="modal-header">
-                <h3 class="modal-title">Checkout</h3>
+                <h3 class="modal-title" id="checkout-title">Checkout</h3>
                 <button class="close-modal" id="close-checkout">&times;</button>
             </div>
             <form id="checkout-form">
@@ -603,13 +603,13 @@
     </div>
 
     <!-- Confirmation Modal -->
-    <div class="modal" id="confirmation-modal">
+    <div class="modal" id="confirmation-modal" role="dialog" aria-modal="true" aria-labelledby="confirmation-title">
         <div class="modal-content">
             <div class="confirmation-content">
                 <div class="confirmation-icon">
                     <i class="fas fa-check-circle"></i>
                 </div>
-                <h3 class="modal-title">Order Confirmed!</h3>
+                <h3 class="modal-title" id="confirmation-title">Order Confirmed!</h3>
                 <div class="confirmation-message">
                     <p>Thank you for your order. Your food will be prepared fresh and delivered to you soon.</p>
                 </div>
@@ -624,14 +624,8 @@
     </div>
 
     <!-- EmailJS Script -->
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
-    <script type="text/javascript">
-        (function() {
-            emailjs.init("TrATLnE8FzcvRLEnY");
-        })();
-    </script>
-    
-    <script src="script.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js" defer></script>
+    <script src="script.js" defer></script>
 
 </body>
 </html>
