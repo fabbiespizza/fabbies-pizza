@@ -127,27 +127,27 @@ function initCart() {
             return;
         }
         cartSidebar.classList.remove('active');
-        checkoutModal.classList.add('active');  // FIXED: Changed from 'show' to 'active'
+        checkoutModal.classList.add('active');
         document.body.style.overflow = 'hidden';
     });
 
     // Close modals
     closeCheckout.addEventListener('click', function() {
-        checkoutModal.classList.remove('active');  // FIXED: Changed from 'show' to 'active'
+        checkoutModal.classList.remove('active');
         document.body.style.overflow = '';
     });
     closeConfirmation.addEventListener('click', function() {
-        confirmationModal.classList.remove('active');  // FIXED: Changed from 'show' to 'active'
+        confirmationModal.classList.remove('active');
         document.body.style.overflow = '';
     });
 
     window.addEventListener('click', function(e) {
         if (e.target === checkoutModal) {
-            checkoutModal.classList.remove('active');  // FIXED: Changed from 'show' to 'active'
+            checkoutModal.classList.remove('active');
             document.body.style.overflow = '';
         }
         if (e.target === confirmationModal) {
-            confirmationModal.classList.remove('active');  // FIXED: Changed from 'show' to 'active'
+            confirmationModal.classList.remove('active');
             document.body.style.overflow = '';
         }
     });
@@ -155,6 +155,13 @@ function initCart() {
     // Form submission
     checkoutForm.addEventListener('submit', function(e) {
         e.preventDefault();
+
+        // Validate email field
+        const email = document.getElementById('checkout-email').value.trim();
+        if (!email) {
+            alert('Please enter a valid email address');
+            return;
+        }
 
         const orderId = Math.floor(Math.random() * 90000) + 10000;
         const paymentMethod = document.querySelector('input[name="payment"]:checked').value;
@@ -166,36 +173,58 @@ function initCart() {
         }[paymentMethod];
 
         const templateParams = {
-            to_email: document.getElementById('checkout-email').value,
-            to_name: document.getElementById('checkout-name').value,
-            order_id: orderId,
-            phone: document.getElementById('checkout-phone').value,
-            address: document.getElementById('checkout-address').value,
-            payment_method: paymentMethodText,
-            items: cart.map(item => `${item.name} x ${item.quantity}`).join('<br>'),
-            total: cart.reduce((sum, item) => sum + item.price * item.quantity, 0).toFixed(2)
-        };
+    to_email: document.getElementById('checkout-email').value,
+    to_name: document.getElementById('checkout-name').value,
+    order_id: orderId,
+    phone: document.getElementById('checkout-phone').value,
+    address: document.getElementById('checkout-address').value,
+    payment_method: paymentMethodText,
+    orders: cart.map(item => ({
+        name: item.name,
+        units: item.quantity,
+        price: (item.price * item.quantity).toFixed(2)
+    })),
+    cost: {
+        subtotal: cart.reduce((sum, item) => sum + item.price * item.quantity, 0).toFixed(2),
+        delivery: "99.00",  // You can adjust this value
+        total: cart.reduce((sum, item) => sum + item.price * item.quantity, 0).toFixed(2)
+    }
+};
 
+        // Show loading state
+        const submitBtn = this.querySelector('.confirm-btn');
+        const originalText = submitBtn.innerHTML;
+        submitBtn.innerHTML = 'Sending...';
+        submitBtn.disabled = true;
+
+        // Send email
         emailjs.send('service_mqnhy5n', 'template_w6wpil4', templateParams)
             .then(() => {
                 console.log('✅ Order email sent!');
+                alert('Order confirmed! Check your email for details.');
             })
             .catch(err => {
-                console.log('❌ EmailJS Error:', err);
+                console.error('❌ EmailJS Error:', err);
+                alert('Order placed, but failed to send email. We will contact you shortly.');
+            })
+            .finally(() => {
+                // Show confirmation
+                orderIdElement.textContent = orderId;
+                paymentMethodElement.textContent = paymentMethodText;
+                checkoutModal.classList.remove('active');
+                confirmationModal.classList.add('active');
+                document.body.style.overflow = 'hidden';
+
+                // Reset cart
+                cart = [];
+                updateCartCount();
+                updateCartDisplay();
+                checkoutForm.reset();
+                
+                // Reset button
+                submitBtn.innerHTML = originalText;
+                submitBtn.disabled = false;
             });
-
-        // Show confirmation
-        orderIdElement.textContent = orderId;
-        paymentMethodElement.textContent = paymentMethodText;
-        checkoutModal.classList.remove('active');  // FIXED: Changed from 'show' to 'active'
-        confirmationModal.classList.add('active');  // FIXED: Changed from 'show' to 'active'
-        document.body.style.overflow = 'hidden';
-
-        // Reset cart
-        cart = [];
-        updateCartCount();
-        updateCartDisplay();
-        checkoutForm.reset();
     });
 }
 
