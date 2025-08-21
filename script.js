@@ -37,6 +37,7 @@ document.addEventListener('DOMContentLoaded', function() {
 function initSlideshow() {
     const slides = document.querySelectorAll('.hero-slide');
     let currentSlide = 0;
+    const prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     function showSlide(index) {
         slides.forEach(slide => slide.classList.remove('active'));
         slides[index].classList.add('active');
@@ -46,7 +47,9 @@ function initSlideshow() {
         showSlide(currentSlide);
     }
     showSlide(0);
-    setInterval(nextSlide, 5000);
+    if (!prefersReducedMotion) {
+        setInterval(nextSlide, 5000);
+    }
 }
 
 // Scroll Header Effect
@@ -73,10 +76,12 @@ function initCart() {
     // Toggle cart sidebar
     cartBtn.addEventListener('click', () => {
         cartSidebar.classList.add('active');
+        document.documentElement.classList.add('ui-overlay-open');
         updateCartDisplay();
     });
     closeCartBtn.addEventListener('click', () => {
         cartSidebar.classList.remove('active');
+        document.documentElement.classList.remove('ui-overlay-open');
     });
 
     // Add to cart buttons
@@ -135,26 +140,31 @@ function initCart() {
         cartSidebar.classList.remove('active');
         checkoutModal.classList.add('active');
         document.body.style.overflow = 'hidden';
+        document.documentElement.classList.add('ui-overlay-open');
     });
 
     // Close modals
     closeCheckout.addEventListener('click', function() {
         checkoutModal.classList.remove('active');
         document.body.style.overflow = '';
+        document.documentElement.classList.remove('ui-overlay-open');
     });
     closeConfirmation.addEventListener('click', function() {
         confirmationModal.classList.remove('active');
         document.body.style.overflow = '';
+        document.documentElement.classList.remove('ui-overlay-open');
     });
 
     window.addEventListener('click', function(e) {
         if (e.target === checkoutModal) {
             checkoutModal.classList.remove('active');
             document.body.style.overflow = '';
+            document.documentElement.classList.remove('ui-overlay-open');
         }
         if (e.target === confirmationModal) {
             confirmationModal.classList.remove('active');
             document.body.style.overflow = '';
+            document.documentElement.classList.remove('ui-overlay-open');
         }
     });
 
@@ -162,19 +172,41 @@ function initCart() {
     checkoutForm.addEventListener('submit', function(e) {
         e.preventDefault();
 
-        // Validate fields
+        // Enhanced validation for all devices
         const nameVal = document.getElementById('checkout-name').value.trim();
         const emailVal = document.getElementById('checkout-email').value.trim();
         const phoneVal = document.getElementById('checkout-phone').value.trim();
         const addressVal = document.getElementById('checkout-address').value.trim();
 
-        const emailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailVal);
-        const phoneValid = /^[0-9+\-\s]{7,}$/.test(phoneVal);
+        // Enhanced validation patterns
+        const emailValid = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(emailVal);
+        const phoneValid = /^[\+]?[0-9\s\-\(\)]{9,15}$/.test(phoneVal);
+        const nameValid = /^[a-zA-Z\s]{3,50}$/.test(nameVal);
 
-        if (nameVal.length < 3) { showToast('Please enter your full name.', 'error'); return; }
-        if (!emailValid) { showToast('Please enter a valid email address.', 'error'); return; }
-        if (!phoneValid) { showToast('Please enter a valid phone number.', 'error'); return; }
-        if (addressVal.length < 10) { showToast('Please enter a complete delivery address.', 'error'); return; }
+        // Validation with better error messages
+        if (!nameValid || nameVal.length < 3) { 
+            showToast('Please enter a valid full name', 'error'); 
+            document.getElementById('checkout-name').focus();
+            return; 
+        }
+        
+        if (!emailValid) { 
+            showToast('Please enter a valid email address (e.g., user@example.com).', 'error'); 
+            document.getElementById('checkout-email').focus();
+            return; 
+        }
+        
+        if (!phoneValid) { 
+            showToast('Please enter a valid phone number', 'error'); 
+            document.getElementById('checkout-phone').focus();
+            return; 
+        }
+        
+        if (addressVal.length < 15) { 
+            showToast('Please enter a complete delivery address ', 'error'); 
+            document.getElementById('checkout-address').focus();
+            return; 
+        }
 
         const orderId = Math.floor(Math.random() * 90000) + 10000;
         const paymentMethod = document.querySelector('input[name="payment"]:checked').value;
@@ -232,6 +264,7 @@ function initCart() {
                 checkoutModal.classList.remove('active');
                 confirmationModal.classList.add('active');
                 document.body.style.overflow = 'hidden';
+                document.documentElement.classList.add('ui-overlay-open');
 
                 // Reset cart
                 cart = [];
@@ -254,6 +287,7 @@ function initCart() {
             checkoutModal.classList.remove('active');
             confirmationModal.classList.add('active');
             document.body.style.overflow = 'hidden';
+            document.documentElement.classList.add('ui-overlay-open');
             cart = [];
             updateCartCount();
             updateCartDisplay();
@@ -297,7 +331,12 @@ function updateCartDisplay() {
             </div>
             <div class="cart-item-details">
                 <h4 class="cart-item-title">${item.name}</h4>
-                <p class="cart-item-price">Rs. ${item.price} x ${item.quantity}</p>
+                <div class="cart-item-qty-row">
+                    <button class="cart-qty-btn cart-qty-minus" data-index="${index}" aria-label="Decrease quantity"><i class="fas fa-minus"></i></button>
+                    <span class="cart-item-qty">${item.quantity}</span>
+                    <button class="cart-qty-btn cart-qty-plus" data-index="${index}" aria-label="Increase quantity"><i class="fas fa-plus"></i></button>
+                </div>
+                <p class="cart-item-price">Rs. ${(item.price * item.quantity).toFixed(2)}</p>
                 <div class="cart-item-actions">
                     <button class="remove-item" data-index="${index}">
                         <i class="fas fa-trash"></i> Remove
@@ -306,9 +345,30 @@ function updateCartDisplay() {
             </div>
         `;
         cartItemsContainer.appendChild(itemElement);
+        // Remove item
         itemElement.querySelector('.remove-item').addEventListener('click', function() {
             const index = parseInt(this.getAttribute('data-index'));
             cart.splice(index, 1);
+            updateCartDisplay();
+            updateCartCount();
+            saveCartToStorage();
+        });
+        // Quantity minus
+        itemElement.querySelector('.cart-qty-minus').addEventListener('click', function() {
+            const idx = parseInt(this.getAttribute('data-index'));
+            if (cart[idx].quantity > 1) {
+                cart[idx].quantity -= 1;
+            } else {
+                cart.splice(idx, 1);
+            }
+            updateCartDisplay();
+            updateCartCount();
+            saveCartToStorage();
+        });
+        // Quantity plus
+        itemElement.querySelector('.cart-qty-plus').addEventListener('click', function() {
+            const idx = parseInt(this.getAttribute('data-index'));
+            cart[idx].quantity += 1;
             updateCartDisplay();
             updateCartCount();
             saveCartToStorage();
@@ -344,25 +404,126 @@ function showCartNotification() {
     }, 3000);
 }
 
-// Generic toast
+// Generic toast - Mobile optimized
 function showToast(message, type = 'info') {
+    // Remove any existing toasts first
+    const existingToasts = document.querySelectorAll('.toast-notification');
+    existingToasts.forEach(toast => toast.remove());
+    
     const toast = document.createElement('div');
-    toast.style.position = 'fixed';
-    toast.style.bottom = '20px';
-    toast.style.right = '20px';
-    toast.style.backgroundColor = type === 'error' ? '#e53935' : (type === 'success' ? 'var(--success)' : '#333');
-    toast.style.color = 'white';
-    toast.style.padding = '12px 18px';
-    toast.style.borderRadius = '6px';
-    toast.style.boxShadow = '0 5px 15px rgba(0,0,0,0.2)';
-    toast.style.zIndex = '1000';
-    toast.textContent = message;
+    toast.className = 'toast-notification';
+    
+    // Set colors based on type
+    let bgColor, icon;
+    switch(type) {
+        case 'error':
+            bgColor = '#e53935';
+            icon = '❌';
+            break;
+        case 'success':
+            bgColor = 'var(--success)';
+            icon = '✅';
+            break;
+        case 'warning':
+            bgColor = '#ff9800';
+            icon = '⚠️';
+            break;
+        default:
+            bgColor = '#333';
+            icon = 'ℹ️';
+    }
+    
+    // Mobile-optimized styles
+    toast.style.cssText = `
+        position: fixed;
+        bottom: 20px;
+        left: 20px;
+        right: 20px;
+        max-width: 400px;
+        margin: 0 auto;
+        background-color: ${bgColor};
+        color: white;
+        padding: 16px 20px;
+        border-radius: 8px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+        z-index: 9999;
+        font-size: 14px;
+        font-weight: 500;
+        line-height: 1.4;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        transform: translateY(100px);
+        opacity: 0;
+        transition: all 0.3s ease;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+    `;
+    
+    toast.innerHTML = `
+        <span style="font-size: 18px;">${icon}</span>
+        <span style="flex: 1;">${message}</span>
+        <button onclick="this.parentElement.remove()" style="
+            background: none;
+            border: none;
+            color: white;
+            font-size: 18px;
+            cursor: pointer;
+            padding: 0;
+            margin-left: 8px;
+            opacity: 0.7;
+            transition: opacity 0.2s;
+        " onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.7'">×</button>
+    `;
+    
     document.body.appendChild(toast);
-    setTimeout(() => {
+    
+    // Animate in
+    requestAnimationFrame(() => {
+        toast.style.transform = 'translateY(0)';
+        toast.style.opacity = '1';
+    });
+    
+    // Auto remove after 4 seconds
+    const timeout = setTimeout(() => {
+        toast.style.transform = 'translateY(100px)';
         toast.style.opacity = '0';
-        toast.style.transition = 'opacity 0.4s';
-        setTimeout(() => toast.remove(), 400);
-    }, 2500);
+        setTimeout(() => {
+            if (toast.parentElement) {
+                toast.remove();
+            }
+        }, 300);
+    }, 4000);
+    
+    // Allow manual close to clear timeout
+    toast.querySelector('button').addEventListener('click', () => {
+        clearTimeout(timeout);
+    });
+    
+    // Add touch support for mobile
+    let touchStartY = 0;
+    let touchEndY = 0;
+    
+    toast.addEventListener('touchstart', (e) => {
+        touchStartY = e.touches[0].clientY;
+    }, { passive: true });
+    
+    toast.addEventListener('touchend', (e) => {
+        touchEndY = e.changedTouches[0].clientY;
+        const swipeDistance = touchStartY - touchEndY;
+        
+        // If swiped up more than 50px, dismiss the toast
+        if (swipeDistance > 50) {
+            clearTimeout(timeout);
+            toast.style.transform = 'translateY(-100px)';
+            toast.style.opacity = '0';
+            setTimeout(() => {
+                if (toast.parentElement) {
+                    toast.remove();
+                }
+            }, 300);
+        }
+    }, { passive: true });
 }
 
 // Persistence helpers
