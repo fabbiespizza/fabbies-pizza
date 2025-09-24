@@ -477,6 +477,7 @@ header.scrolled {
 
 .cart-icon {
     font-size: var(--font-size-lg);
+    color: #cde73c; 
 }
 
 .cart-count {
@@ -1700,4 +1701,5 @@ footer {
         grid-template-columns: repeat(3, 1fr);
     }
 }
+
 
