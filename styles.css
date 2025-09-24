@@ -469,22 +469,29 @@ header.scrolled {
     transform: translateY(-2px);
 }
 
+.cart-wrapper {
+    position: relative; /* parent for badge */
+    display: inline-block;
+    cursor: pointer; /* so it still looks clickable */
+}
+
 .cart-icon {
-    margin-right: 8px;
     font-size: var(--font-size-lg);
 }
 
 .cart-count {
+    position: absolute;
+    top: -8px;   /* adjust these two */
+    right: -10px;
     background-color: var(--light);
     color: var(--primary);
     border-radius: var(--border-radius-circle);
     width: 22px;
     height: 22px;
-    display: inline-flex;
+    display: flex;
     align-items: center;
     justify-content: center;
     font-size: var(--font-size-xs);
-    margin-left: 8px;
 }
 
 .mobile-menu-btn {
@@ -1693,3 +1700,4 @@ footer {
         grid-template-columns: repeat(3, 1fr);
     }
 }
+
